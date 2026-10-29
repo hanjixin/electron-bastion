@@ -1,0 +1,50 @@
+{
+  "name": "electron-bastion",
+  "version": "0.1.0",
+  "description": "通用 Electron 发布保护工具：体检、门禁、水印、篡改冒烟、字节码",
+  "type": "module",
+  "bin": {
+    "bastion": "./dist/cli.js"
+  },
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "node --test test/*.test.js",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@electron/asar": "^3.4.1",
+    "@electron/fuses": "^2.1.3",
+    "bytenode": "^2.1.0",
+    "esbuild": "^0.25.0",
+    "plist": "^3.1.0",
+    "resedit": "^2.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@types/plist": "^3.0.5",
+    "typescript": "^5.7.0"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hanjixin/electron-bastion.git"
+  },
+  "keywords": [
+    "electron",
+    "security",
+    "asar",
+    "bytecode",
+    "fuses",
+    "watermark",
+    "hardening"
+  ]
+}
