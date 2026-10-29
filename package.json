@@ -1,13 +1,14 @@
 {
   "name": "electron-bastion",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "通用 Electron 发布保护工具：体检、门禁、水印、篡改冒烟、字节码",
   "type": "module",
   "bin": {
     "bastion": "./dist/cli.js"
   },
   "exports": {
-    ".": "./dist/index.js"
+    ".": "./dist/index.js",
+    "./package.json": "./package.json"
   },
   "files": [
     "dist"
