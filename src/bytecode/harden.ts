@@ -401,6 +401,18 @@ export async function hardenMainBundle(options: HardenOptions): Promise<HardenRe
           `V8 字节码与版本强绑定，必须用目标 Electron 编译（如产物自带的那份）。`
       )
     }
+    if (compilerRuntime.platform !== layout.platform) {
+      throw new Error(
+        `编译用 Electron 的平台 ${compilerRuntime.platform} 与目标产物 ${layout.platform} 不一致。` +
+          `V8 字节码不能跨操作系统生成，请在目标平台构建。`
+      )
+    }
+    if (layout.arch !== 'unknown' && compilerRuntime.arch !== layout.arch) {
+      throw new Error(
+        `编译用 Electron 的架构 ${compilerRuntime.arch} 与目标产物 ${layout.arch} 不一致。` +
+          `V8 字节码不能跨 CPU 架构生成。`
+      )
+    }
     const graph = (isEsm ? await collectEsmGraph(entryFile) : await collectMainGraph(entryFile)).filter(
       (file) => SCRIPT_EXT.test(file)
     )

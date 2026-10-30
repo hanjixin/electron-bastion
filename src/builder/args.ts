@@ -134,6 +134,18 @@ export async function planProtectedBuild(
   const { projectRequire, builder, Packager } = loadBuilder(projectDir)
   const parsed = builder.configureBuildCommand(builder.createYargs()).parse(args)
   const options = builder.normalizeOptions(parsed)
+  // Mac App Store 目标不适用归档完整性校验，必须显式拒绝，避免产物被误认为普通 macOS 包
+  for (const [platform, archToTypes] of options.targets) {
+    if (platform.nodeName !== 'darwin') continue
+    for (const targetNames of archToTypes.values()) {
+      const masTarget = targetNames.find((name) =>
+        ['mas', 'mas-dev'].includes(name.toLowerCase().trim())
+      )
+      if (masTarget) {
+        throw new Error(`[bastion] 不支持 Mac App Store 目标（${masTarget}）`)
+      }
+    }
+  }
   const platformNames = [...options.targets.keys()].map((platform) => platform.nodeName)
   const packager = new Packager({ projectDir, ...options })
   await packager.validateConfig()
